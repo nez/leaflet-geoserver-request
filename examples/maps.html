@@ -52,12 +52,11 @@
     }
   ).addTo(map);
 
-  //wms
-  var wms = L.Geoserver.wms("https://riskinfo.tj/geoserver/wms", {
-    layers: `tajikistan:EAR_Builtup`,
-  });
-  wms.addTo(map);
 
+
+//var kundavi_1_modelo_poegt_moegt = new L.Geoserver.wfs('http://137.184.102.78:8080/geoserver/wfs', { layers: 'kundavi:1_modelo_poegt_moegt', style: {color: 'black'}});
+  //var kundavi_2_POEL = new L.Geoserver.wfs('http://137.184.102.78:8080/geoserver/wfs', { layers: 'kundavi:2_POEL', style: {color: 'black'}});
+  
   //wfs
   var wfs = L.Geoserver.wfs("https://riskinfo.tj/geoserver/wfs", {
     layers: `tajikistan:jamoat`,
@@ -72,7 +71,23 @@
     },
     CQL_FILTER: `name_rg=='Sughd'`,
   });
-  wfs.addTo(map)
+  wfs.addTo(map);
+
+  var wfs2 = L.Geoserver.wfs("https://riskinfo.tj/geoserver/wfs", {
+    layers: `tajikistan:jamoat`,
+    style: {
+      color: "white",
+      fillOpacity: 0,
+      opacity: 0.5,
+      stockWidth: 0.5,
+    },
+    onEachFeature: function (f, l) {
+      l.bindPopup('<pre>'+JSON.stringify(f.properties,null,' ').replace(/[\{\}"]/g,'')+'</pre>');
+    },
+    CQL_FILTER: `name_rg=='Sughd'`,
+  });
+  wfs2.addTo(map);
+
 
   //legend
   var legend = L.Geoserver.legend("https://riskinfo.tj/geoserver/wms", {
